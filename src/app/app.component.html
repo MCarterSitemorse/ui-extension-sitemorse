@@ -1,0 +1,66 @@
+<div class="loading" *ngIf="loading">
+  <img class="displayed" src="assets/loading.gif">
+  <h3>Loading...</h3>
+</div>
+
+<div *ngIf="chartData.length && loading != true">
+  <h2 class="results-title">Scores</h2>
+
+  <div class="chart-wrapper">
+    <canvas baseChart
+            [datasets]="chartData"
+            [labels]="chartLabels"
+            [chartType]="chartType"
+            [options]="chartOptions"
+            [legend]="chartLegend"
+            [colors]="chartColors"></canvas>
+  </div>
+
+  <h2 class="results-title">Priorities</h2>
+  <table class="priorities-table">
+    <!-- SEO -->
+    <tr>
+      <td>Search engine optimization (SEO)</td>
+      <td>
+        <app-priority [data]="priorities.seo"></app-priority>
+      </td>
+    </tr>
+
+    <!-- GRC -->
+    <tr>
+      <td>Governance, risk and compliance (GRC)</td>
+      <td>
+        <app-priority [data]="priorities.grc"></app-priority>
+      </td>
+    </tr>
+
+    <!-- UX -->
+    <tr>
+      <td>User Experience (UX)</td>
+      <td>
+        <app-priority [data]="priorities.ux"></app-priority>
+      </td>
+    </tr>
+  </table>
+
+  <div class="full-report-wrapper">
+    <a class="button-full-report"
+       *ngIf="externalUrl"
+       color="primary"
+       mat-raised-button
+       [href]="externalUrl"
+       target="_blank">
+      View full report
+      <mat-icon>arrow_forward</mat-icon>
+    </a>
+  </div>
+</div>
+
+
+
+<div class="error" *ngIf="error">
+  <h3>An error has occurred!</h3>
+  <h5>You might be able to find more information in the developer console.</h5>
+</div>
+
+<!--<mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner>-->

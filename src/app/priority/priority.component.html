@@ -1,0 +1,10 @@
+<mat-icon class="check"
+          *ngIf="!data.total">
+  check
+</mat-icon>
+
+<mat-icon class="warning"
+          *ngIf="data.total"
+          matTooltip="{{ data.total }} issues were found. View full report for more information.">
+  warning
+</mat-icon>
