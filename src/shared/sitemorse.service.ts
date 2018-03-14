@@ -19,13 +19,6 @@ export class SitemorseService {
     }
 
     public analyzeUrl (url: string) {
-        //return this.httpClient.get(`${this.url}/sitemorse/api/get/?url=${url}/`);
-        //var test:string = `${this.url}/site/sitemorse/?url=${url}`;
-        //console.log("Test url:");
-        //console.log(test);
-        //test.replace(/\/+$/, '/');
-        //console.log(test);
-        //return this.httpClient.get(test);
         return this.httpClient.get(`${this.url}/site/sitemorse/?url=${url}`);
     }
 

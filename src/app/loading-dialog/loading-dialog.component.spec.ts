@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PriorityComponent } from './priority.component';
+import { LoadingDialogComponent } from './loading-dialog.component';
 
-describe('PriorityComponent', () => {
-  let component: PriorityComponent;
-  let fixture: ComponentFixture<PriorityComponent>;
+describe('LoadingDialogComponent', () => {
+  let component: LoadingDialogComponent;
+  let fixture: ComponentFixture<LoadingDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PriorityComponent ]
+      declarations: [ LoadingDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PriorityComponent);
+    fixture = TestBed.createComponent(LoadingDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

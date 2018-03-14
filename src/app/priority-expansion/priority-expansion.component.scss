@@ -1,0 +1,34 @@
+.priority-expansion-align .mat-expansion-panel-header-title {
+  flex-basis: 0;
+  padding: 5px;
+  justify-content: space-between;
+
+  .check {
+    color: green !important;
+    margin: 15px;
+  }
+
+  .warning {
+    color: orange !important;
+    margin: 15px;
+  }
+}
+
+.priority-expansion-align .priorities-expansion-table {
+  width: 100%;
+  text-align: left;
+  font-size: small;
+
+  .category {
+    text-align: center;
+    font-weight: bold;
+    width: 20%
+  }
+
+  th, td {
+    padding: 5px;
+  }
+
+  tr:hover {background-color: whitesmoke;}
+
+}

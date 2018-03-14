@@ -1,0 +1,24 @@
+<mat-accordion class="priority-expansion-align">
+   <mat-expansion-panel *ngFor="let item of dataArray" hideToggle="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4>{{data[item].title}}</h4>
+        <mat-icon class="check" *ngIf="!data[item].total">check</mat-icon>
+        <mat-icon class="warning" *ngIf="data[item].total" >warning</mat-icon>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+     <table class="priorities-expansion-table">
+
+       <tr *ngFor="let prio of data[item].diagnostics">
+         <td class="category">
+           {{prio.category}}
+         </td>
+         <td>
+           {{prio.title}}
+         </td>
+       </tr>
+     </table>
+  </mat-expansion-panel>
+</mat-accordion>
+

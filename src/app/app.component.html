@@ -1,8 +1,3 @@
-<div class="loading" *ngIf="loading">
-  <img class="displayed" src="assets/loading.gif">
-  <h3>Loading...</h3>
-</div>
-
 <div *ngIf="chartData.length && loading != true">
   <h2 class="results-title">Scores</h2>
 
@@ -17,31 +12,9 @@
   </div>
 
   <h2 class="results-title">Priorities</h2>
-  <table class="priorities-table">
-    <!-- SEO -->
-    <tr>
-      <td>Search engine optimization (SEO)</td>
-      <td>
-        <app-priority [data]="priorities.seo"></app-priority>
-      </td>
-    </tr>
-
-    <!-- GRC -->
-    <tr>
-      <td>Governance, risk and compliance (GRC)</td>
-      <td>
-        <app-priority [data]="priorities.grc"></app-priority>
-      </td>
-    </tr>
-
-    <!-- UX -->
-    <tr>
-      <td>User Experience (UX)</td>
-      <td>
-        <app-priority [data]="priorities.ux"></app-priority>
-      </td>
-    </tr>
-  </table>
+  <div>
+    <app-priority-expansion [data]="priorities"></app-priority-expansion>
+  </div>
 
   <div class="full-report-wrapper">
     <a class="button-full-report"

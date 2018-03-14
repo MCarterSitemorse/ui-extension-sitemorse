@@ -1,5 +1,8 @@
-import { Component, NgZone, OnInit, ApplicationRef } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { SitemorseService } from '../shared/sitemorse.service';
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
+import { LoadingDialogComponent} from "./loading-dialog/loading-dialog.component";
+import mockData from '../mock-data';
 
 @Component({
     selector: 'app-root',
@@ -7,11 +10,12 @@ import { SitemorseService } from '../shared/sitemorse.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+    //Settings
     public priorities: any;
     public externalUrl: string;
     public error = false;
     public loading = true;
-    public test = true;
+    public dialogRef: MatDialogRef<LoadingDialogComponent>;
 
     // Chart
     public chartType = 'bar';
@@ -30,21 +34,35 @@ export class AppComponent implements OnInit {
     };
     public chartLegend: boolean = false;
 
+    public mockdata:any;
+
     constructor (private sitemorse: SitemorseService,
                  private zone: NgZone,
-                 private app: ApplicationRef) {}
+                 private dialog: MatDialog) {
+      this.mockdata = mockData;
+    }
 
     ngOnInit () {
         this.sitemorse.contextChanged$.subscribe((context) => {
             console.log("Requesting data");
+            this.openDialog();
 
             this.error = false;
             this.loading = true;
 
-            //Fix missing end slash on homepage - extremely hacky
+            //-------------------------------
+            //WARNING - HERE BE FILTHY HACKS
+
             var url: string = context.data.pageUrl;
+
+            //Fix missing end slash on homepage
             if (url.slice(-4) === "site") url += "/";
+
+            //Change URL to use preview mount (ONLY WORKS FOR SPECIFIC MOUNT CONFIG)
+            url = url.replace("/site", "/site/preview");
+
             console.log("URL: " + url);
+            //-------------------------------
 
             this.sitemorse.analyzeUrl(url)
                 .subscribe((result) => {
@@ -52,11 +70,12 @@ export class AppComponent implements OnInit {
                   console.log("Data received, processing results");
                   console.log(result);
                   this.processResults(result);
-
+                  this.closeDialog();
                 }, () => {
                     this.error = true;
                     this.loading = false;
                     console.log("error");
+                    this.closeDialog();
                 });
         });
     }
@@ -112,8 +131,21 @@ export class AppComponent implements OnInit {
             this.externalUrl = data.result.url;
         });
 
-        //Force app refresh
-        this.app.tick();
         console.log("Processing done")
+    }
+
+    openDialog() {
+      console.log("Opening Dialog")
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+
+      this.dialogRef = this.dialog.open(LoadingDialogComponent, dialogConfig);
+    }
+
+    closeDialog() {
+      console.log("Closing Dialog")
+      this.dialogRef.close();
     }
 }

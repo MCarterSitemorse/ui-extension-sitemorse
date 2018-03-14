@@ -61,6 +61,11 @@ export default {
             'category': 'Accessibility',
             'total': 1,
             'title': 'WCAG 2: H44 - Using label elements to associate text labels with form controls'
+          },
+          {
+            'category': 'Accessibility',
+            'total': 1,
+            'title': 'WCAG 2: H44 - Using label elements to associate text labels with form controls'
           }
         ],
         'total': 1,
