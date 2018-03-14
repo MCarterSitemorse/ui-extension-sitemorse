@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
             if (url.slice(-4) === "site") url += "/";
 
             //Change URL to use preview mount (ONLY WORKS FOR SPECIFIC MOUNT CONFIG)
-            url = url.replace("/site", "/site/preview");
+            url = url.replace("/site/", "/site/preview/");
 
             console.log("URL: " + url);
             //-------------------------------
