@@ -53,18 +53,17 @@
       margin: 5px;
     }
   }
-  .loading {
-    vertical-align: middle;
+  .notpage {
+    span {
+      display: inline-block;
+      vertical-align: middle;
+    }
     h1, h2, h3, h4, h5 {
       text-align: center;
       margin: 5px;
     }
-    img.displayed {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
   }
+
   mat-progress-spinner {
     width: 80px;
     margin: auto;

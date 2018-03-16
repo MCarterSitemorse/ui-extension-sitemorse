@@ -14,8 +14,7 @@ export class AppComponent implements OnInit {
     public priorities: any;
     public externalUrl: string;
     public error = false;
-    public loading = true;
-    public dialogRef: MatDialogRef<LoadingDialogComponent>;
+    public ispage = true;
 
     // Chart
     public chartType = 'bar';
@@ -44,39 +43,40 @@ export class AppComponent implements OnInit {
 
     ngOnInit () {
         this.sitemorse.contextChanged$.subscribe((context) => {
-            console.log("Requesting data");
-            this.openDialog();
-
             this.error = false;
-            this.loading = true;
+            this.ispage = false;
 
-            //-------------------------------
-            //WARNING - HERE BE FILTHY HACKS
+            if (context.id.split('.')[1] === "page") {
+              this.ispage = true;
+              console.log("Requesting data");
+              let dialogRef = this.openDialog();
 
-            var url: string = context.data.pageUrl;
+              //-------------------------------
+              //WARNING - HERE BE FILTHY HACKS
 
-            //Fix missing end slash on homepage
-            if (url.slice(-4) === "site") url += "/";
+              var url: string = context.data.pageUrl;
 
-            //Change URL to use preview mount (ONLY WORKS FOR SPECIFIC MOUNT CONFIG)
-            url = url.replace("/site/", "/site/preview/");
+              //Fix missing end slash on homepage
+              if (url.slice(-4) === "site") url += "/";
 
-            console.log("URL: " + url);
-            //-------------------------------
+              //Change URL to use preview mount (ONLY WORKS FOR SPECIFIC MOUNT CONFIG)
+              url = url.replace("/site/", "/site/preview/");
 
-            this.sitemorse.analyzeUrl(url)
+              console.log("URL: " + url);
+              //-------------------------------
+
+              this.sitemorse.analyzeUrl(url)
                 .subscribe((result) => {
-                  this.loading = false;
                   console.log("Data received, processing results");
                   console.log(result);
                   this.processResults(result);
-                  this.closeDialog();
+                  this.closeDialog(dialogRef);
                 }, () => {
-                    this.error = true;
-                    this.loading = false;
-                    console.log("error");
-                    this.closeDialog();
+                  this.error = true;
+                  console.log("error");
+                  this.closeDialog(dialogRef);
                 });
+            }
         });
     }
 
@@ -141,11 +141,11 @@ export class AppComponent implements OnInit {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
 
-      this.dialogRef = this.dialog.open(LoadingDialogComponent, dialogConfig);
+      return this.dialog.open(LoadingDialogComponent, dialogConfig);
     }
 
-    closeDialog() {
+    closeDialog(dialogRef: MatDialogRef<LoadingDialogComponent>) {
       console.log("Closing Dialog")
-      this.dialogRef.close();
+      dialogRef.close();
     }
 }
