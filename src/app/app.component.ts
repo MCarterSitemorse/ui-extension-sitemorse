@@ -62,6 +62,11 @@ export class AppComponent implements OnInit {
               //Change URL to use preview mount (ONLY WORKS FOR SPECIFIC MOUNT CONFIG)
               url = url.replace("/site/", "/site/preview/");
 
+              //When not on localhost, replace scheme to use https
+              if (url.search("localhost") == -1) {
+                url = url.replace("http://", "https://");
+              }
+
               console.log("URL: " + url);
               //-------------------------------
 
