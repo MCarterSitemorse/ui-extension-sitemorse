@@ -18,11 +18,19 @@ export class SitemorseService {
         });
     }
 
+    sleepFor( sleepDuration ){
+      var now = new Date().getTime();
+      while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
+    }
+
+
     public analyzeUrl (url: string) {
         return this.httpClient.get(`${this.url}/site/sitemorse/?url=${url}`);
+        //return this.httpClient.get(`${this.url}/site/sitemorse/test`);
     }
 
     public determineUrl() {
         return window.location.origin;
     }
+
 }

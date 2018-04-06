@@ -1,8 +1,27 @@
 
 .loading {
   vertical-align: middle;
-  img.displayed {
-    max-width: 100%;
-    height: auto;
+
+  .image-vertical {
+    width: auto;
+    height: 80vh;
   }
+  .image-horizontal {
+    display: none;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .image-vertical {
+      display:none;
+    }
+    .image-horizontal {
+      display: block;
+      height: auto;
+      max-width: 100%;
+    }
+  }
+
 }
+
+
+

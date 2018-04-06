@@ -64,12 +64,12 @@ export class AppComponent implements OnInit {
 
               //When not on localhost, replace scheme to use https
               if (url.search("localhost") == -1) {
+                console.log("replacing http with https")
                 url = url.replace("http://", "https://");
               }
 
               console.log("URL: " + url);
               //-------------------------------
-
               this.sitemorse.analyzeUrl(url)
                 .subscribe((result) => {
                   console.log("Data received, processing results");
