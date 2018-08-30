@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
             this.error = false;
             this.ispage = false;
 
-            if (context.id.split('.')[1] === "page") {
+            if (context.context === "page") {
               this.ispage = true;
               console.log("Requesting data");
               let dialogRef = this.openDialog();

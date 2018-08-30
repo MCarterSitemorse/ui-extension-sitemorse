@@ -12,7 +12,7 @@ export class SitemorseService {
         this.url = this.determineUrl();
 
         this.contextChanged$ = Observable.create((observer) => {
-            (window as any).Hippo.onContextChanged = (context) => {
+          window['BR_EXTENSION'].onContextChanged = (context) => {
                 observer.next(context);
             };
         });
