@@ -1,11 +1,4 @@
-<div class = "notpage" *ngIf="!ispage">
-  <span>
-  <h3>This app only works for pages.</h3>
-  <h5>To analyze the current page, open this panel via the Page - > Info button.</h5>
-  </span>
-</div>
-
-<div *ngIf="chartData.length && ispage">
+<div *ngIf="chartData.length">
   <h2 class="results-title">Scores</h2>
 
   <div class="chart-wrapper">
@@ -35,8 +28,6 @@
     </a>
   </div>
 </div>
-
-
 
 <div class="error" *ngIf="error">
   <h3>An error has occurred!</h3>

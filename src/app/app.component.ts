@@ -2,7 +2,9 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { SitemorseService } from '../shared/sitemorse.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
 import { LoadingDialogComponent} from "./loading-dialog/loading-dialog.component";
+import UiExtension from '@bloomreach/ui-extension';
 import mockData from '../mock-data';
+
 
 @Component({
     selector: 'app-root',
@@ -14,7 +16,6 @@ export class AppComponent implements OnInit {
     public priorities: any;
     public externalUrl: string;
     public error = false;
-    public ispage = true;
 
     // Chart
     public chartType = 'bar';
@@ -42,47 +43,55 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit () {
-        this.sitemorse.contextChanged$.subscribe((context) => {
-            this.error = false;
-            this.ispage = false;
+      let self = this;
+      UiExtension.register().then((ui) => {
+        console.log(`Hi ${ui.user.displayName}`);
 
-            if (context.id.split('.')[1] === "page") {
-              this.ispage = true;
-              console.log("Requesting data");
-              let dialogRef = this.openDialog();
+        self.error = false;
+        function showAnalytics(page) {
 
-              //-------------------------------
-              //WARNING - HERE BE FILTHY HACKS
+          let dialogRef = self.openDialog();
 
-              var url: string = context.data.pageUrl;
+          //Prep config data
+          let config = JSON.parse(ui.extension.config);
+          let baseurl = config.baseUrl;
 
-              //Fix missing end slash on homepage
-              if (url.slice(-4) === "site") url += "/";
+          //-------------------------------
+          //WARNING - HERE BE FILTHY HACKS
 
-              //Change URL to use preview mount (ONLY WORKS FOR SPECIFIC MOUNT CONFIG)
-              url = url.replace("/site/", "/site/preview/");
+          var searchurl = page.url;
 
-              //When not on localhost, replace scheme to use https
-              if (url.search("localhost") == -1) {
-                console.log("replacing http with https")
-                url = url.replace("http://", "https://");
-              }
+          //Fix missing end slash on homepage
+          if (searchurl.slice(-4) === "site") searchurl += "/";
 
-              console.log("URL: " + url);
-              //-------------------------------
-              this.sitemorse.analyzeUrl(url)
-                .subscribe((result) => {
-                  console.log("Data received, processing results");
-                  console.log(result);
-                  this.processResults(result);
-                  this.closeDialog(dialogRef);
-                }, () => {
-                  this.error = true;
-                  console.log("error");
-                  this.closeDialog(dialogRef);
-                });
-            }
-        });
+          //Change URL to use preview mount (ONLY WORKS FOR SPECIFIC MOUNT CONFIG)
+          searchurl = searchurl.replace("/site/", "/site/preview/");
+
+          //When not on localhost, replace scheme to use https
+          if (searchurl.search("localhost") == -1) {
+            console.log("replacing http with https")
+            searchurl = searchurl.replace("http://", "https://");
+          }
+
+          console.log("Analyzing URL: " + searchurl);
+          //-------------------------------
+
+          self.sitemorse.analyzeUrl(baseurl,searchurl)
+            .subscribe((result) => {
+              console.log("Data received, processing results");
+              console.log(result);
+              self.processResults(result);
+              self.closeDialog(dialogRef);
+            }, () => {
+              self.error = true;
+              console.log("error");
+              self.closeDialog(dialogRef);
+            });
+        }
+
+        ui.channel.page.get().then(showAnalytics);
+        ui.channel.page.on('navigate', showAnalytics);
+      });
     }
 
     reset () {
