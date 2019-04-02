@@ -7,8 +7,7 @@ export class SitemorseService {
     constructor (private httpClient: HttpClient) {
     }
 
-    public analyzeUrl (baseurl : string, searchurl: string) {
-        return this.httpClient.get(`${baseurl}/sitemorse/?url=${searchurl}`);
-        //return this.httpClient.get(`${this.url}/site/sitemorse/test`);
+    public analyzeUrl (baseurl : string, searchurl : string, licensekey : string) {
+        return this.httpClient.get(`${baseurl}/?url=${searchurl}&key=${licensekey}`);
     }
 }

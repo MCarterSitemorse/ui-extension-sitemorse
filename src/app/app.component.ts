@@ -16,24 +16,6 @@ export class AppComponent implements OnInit {
     public priorities: any;
     public externalUrl: string;
     public error = false;
-
-    // Chart
-    public chartType = 'bar';
-    public chartLabels: string[] = [];
-    public chartData: any[] = [];
-    public chartColors: any[] = [];
-
-    private chartOptions = {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }],
-      }
-    };
-    public chartLegend: boolean = false;
-
     public mockdata:any;
 
     constructor (private sitemorse: SitemorseService,
@@ -45,7 +27,6 @@ export class AppComponent implements OnInit {
     ngOnInit () {
       let self = this;
       UiExtension.register().then((ui) => {
-        console.log(`Hi ${ui.user.displayName}`);
 
         self.error = false;
         function showAnalytics(page) {
@@ -55,6 +36,8 @@ export class AppComponent implements OnInit {
           //Prep config data
           let config = JSON.parse(ui.extension.config);
           let baseurl = config.baseUrl;
+          let licensekey = config.licenseKey;
+          let previewmountname = config.previewMountName;
 
           //-------------------------------
           //WARNING - HERE BE FILTHY HACKS
@@ -62,10 +45,13 @@ export class AppComponent implements OnInit {
           var searchurl = page.url;
 
           //Fix missing end slash on homepage
-          if (searchurl.slice(-4) === "site") searchurl += "/";
-
+          if (searchurl.slice(-4) === "site") {
+            console.log("Fixing missing trailing slash");
+            searchurl += "/";
+          }
+          
           //Change URL to use preview mount (ONLY WORKS FOR SPECIFIC MOUNT CONFIG)
-          searchurl = searchurl.replace("/site/", "/site/preview/");
+          searchurl = searchurl.replace("/site/", "/site/" + previewmountname + "/");
 
           //When not on localhost, replace scheme to use https
           if (searchurl.search("localhost") == -1) {
@@ -76,7 +62,10 @@ export class AppComponent implements OnInit {
           console.log("Analyzing URL: " + searchurl);
           //-------------------------------
 
-          self.sitemorse.analyzeUrl(baseurl,searchurl)
+          self.processResults(mockData);
+          self.closeDialog(dialogRef);
+          /*
+          self.sitemorse.analyzeUrl(baseurl,searchurl,licensekey)
             .subscribe((result) => {
               console.log("Data received, processing results");
               console.log(result);
@@ -86,7 +75,7 @@ export class AppComponent implements OnInit {
               self.error = true;
               console.log("error");
               self.closeDialog(dialogRef);
-            });
+            });*/
         }
 
         ui.channel.page.get().then(showAnalytics);
@@ -94,59 +83,14 @@ export class AppComponent implements OnInit {
       });
     }
 
-    reset () {
-        this.chartColors = [];
-        this.chartLabels = [];
-        this.chartData = [];
-    }
-
     processResults (data) {
-        this.reset();
+      this.zone.run(() => {
+          this.priorities = data.result.priorities;
+          this.externalUrl = data.result.url;
+      });
 
-        //temp arrays
-        var values: any[] = [];
-        var bgcolors: string[] = [];
-        var labels: any[] = [];
-        var datasets: any[] = [];
-        var colors: any[] = [];
-
-        this.zone.run(() => {
-
-            Object.keys(data.result.scores).forEach((key) => {
-
-                const item = data.result.scores[key];
-                if (item.score !== null && item.score >= 0 && item.score <= 10) {
-                    values.push(item.score);
-                    if (item.score < 4) {
-                        bgcolors.push('rgba(238, 115, 109, 0.8)'); //red
-                    } else if (item.score < 7) {
-                        bgcolors.push('rgba(255, 146, 60, 0.8)'); //orange
-                    } else {
-                        bgcolors.push('rgba(51, 205, 153, 0.8)'); //green
-                    }
-                    labels.push(item.title);
-                }
-
-            });
-            //transform
-            datasets = [{
-                label: "", data: values
-              }];
-            colors = [{
-                backgroundColor: bgcolors
-              }];
-
-            //Record
-            this.chartLabels = labels;
-            this.chartData = datasets;
-            this.chartColors = colors;
-
-            this.priorities = data.result.priorities;
-            this.externalUrl = data.result.url;
-        });
-
-        console.log("Processing done")
-    }
+      console.log("Processing done")
+  }
 
     openDialog() {
       console.log("Opening Dialog")
