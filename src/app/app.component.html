@@ -1,8 +1,8 @@
-<div>
-  <img class="logo" src="assets/sitemorse-logo.png">
-</div>
 <div *ngIf="priorities">
-  <h3 class="results-title">Priorities</h3>
+  <div>
+    <img class="logo" src="assets/sitemorse-logo.png">
+  </div>
+  <h2 class="results-title">Priorities</h2>
   <div>
     <app-priority-expansion [data]="priorities"></app-priority-expansion>
   </div>
@@ -24,5 +24,3 @@
   <h3>An error has occurred!</h3>
   <h5>You might be able to find more information in the developer console.</h5>
 </div>
-
-<!--<mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner>-->

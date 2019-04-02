@@ -62,9 +62,6 @@ export class AppComponent implements OnInit {
           console.log("Analyzing URL: " + searchurl);
           //-------------------------------
 
-          self.processResults(mockData);
-          self.closeDialog(dialogRef);
-          /*
           self.sitemorse.analyzeUrl(baseurl,searchurl,licensekey)
             .subscribe((result) => {
               console.log("Data received, processing results");
@@ -75,7 +72,7 @@ export class AppComponent implements OnInit {
               self.error = true;
               console.log("error");
               self.closeDialog(dialogRef);
-            });*/
+            });
         }
 
         ui.channel.page.get().then(showAnalytics);

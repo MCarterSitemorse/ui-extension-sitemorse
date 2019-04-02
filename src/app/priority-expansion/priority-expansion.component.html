@@ -1,5 +1,5 @@
 <mat-accordion [multi]="true" class="priority-expansion-align">
-   <mat-expansion-panel [expanded]="true" *ngFor="let item of dataArray">
+   <mat-expansion-panel [expanded]="data[item].total > 0" *ngFor="let item of dataArray">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <h4>{{data[item].title}}</h4>
