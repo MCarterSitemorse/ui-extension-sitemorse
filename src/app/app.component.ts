@@ -36,7 +36,6 @@ export class AppComponent implements OnInit {
           //Prep config data
           let config = JSON.parse(ui.extension.config);
           let baseurl = config.baseUrl;
-          let licensekey = config.licenseKey;
           let previewmountname = config.previewMountName;
 
           //-------------------------------
@@ -62,7 +61,7 @@ export class AppComponent implements OnInit {
           console.log("Analyzing URL: " + searchurl);
           //-------------------------------
 
-          self.sitemorse.analyzeUrl(baseurl,searchurl,licensekey)
+          self.sitemorse.analyzeUrl(baseurl,searchurl)
             .subscribe((result) => {
               console.log("Data received, processing results");
               console.log(result);

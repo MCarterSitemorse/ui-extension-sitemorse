@@ -4,19 +4,25 @@
       <mat-panel-title>
         <h4>{{data[item].title}}</h4>
         <mat-icon class="check" *ngIf="!data[item].total">check</mat-icon>
-        <mat-icon class="warning" *ngIf="data[item].total" >warning</mat-icon>
+        <mat-icon class="warning" *ngIf="data[item].total">warning</mat-icon>
       </mat-panel-title>
     </mat-expansion-panel-header>
 
      <table class="priorities-expansion-table">
 
        <tr *ngFor="let prio of data[item].diagnostics">
-         <td class="category">
-           {{prio.category}}
+        <td class="category">
+          {{prio.category}}
          </td>
          <td>
-           {{prio.title}}
+          {{prio.title}}
          </td>
+         <td class="count">
+          {{prio.total}}
+        </td>
+        <td class="info">
+            <mat-icon class="info-icon" matTooltip={{prio.info}} matTooltipPosition='left' *ngIf="prio.info">info</mat-icon>
+         </td>         
        </tr>
      </table>
   </mat-expansion-panel>

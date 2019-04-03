@@ -1,35 +1,5 @@
 ::ng-deep {
-  .results-title {
-    margin: 0;
-    background: rgba(0, 0, 0, 0.1);
-    padding: 10px;
-  }
 
-  .priorities-table {
-    width: 100%;
-
-    tr {
-      td {
-        padding: 5px;
-
-        &:last-child {
-          text-align: right;
-        }
-      }
-    }
-
-    mat-icon {
-      border-radius: 5px;
-    }
-
-    .check {
-      color: green !important;
-    }
-
-    .warning {
-      color: orange !important;
-    }
-  }
 
   .logo {
     display: block;
@@ -37,6 +7,12 @@
     margin-right: auto;
     padding: 15px;
     width: 150px;
+  }
+
+  .results-title {
+    margin: 0;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px;
   }
 
   .full-report-wrapper {
@@ -56,11 +32,5 @@
       text-align: center;
       margin-top: 50px;
     }
-  }
-
-  mat-progress-spinner {
-    width: 80px;
-    margin: auto;
-    margin-top: 40px;
   }
 }

@@ -8,6 +8,7 @@ import { SitemorseService } from '../shared/sitemorse.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
 import { PriorityExpansionComponent } from './priority-expansion/priority-expansion.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { PriorityExpansionComponent } from './priority-expansion/priority-expans
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTooltipModule
   ],
   providers: [
       SitemorseService

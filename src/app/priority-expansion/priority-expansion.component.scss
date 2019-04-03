@@ -1,6 +1,6 @@
 .priority-expansion-align .mat-expansion-panel-header-title {
   flex-basis: 0;
-  padding: 5px;
+  padding: 2px;
   justify-content: space-between;
 
   .check {
@@ -24,7 +24,17 @@
     font-weight: bold;
     width: 20%
   }
-
+  .count {
+    text-align: center;
+    width: 20px;
+  }
+  .info-icon {
+    color: gainsboro !important;
+  }  
+  .info {
+    text-align: center;
+    width: 20px;
+  }
   th, td {
     padding: 5px;
   }
