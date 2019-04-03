@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {TooltipPosition} from '@angular/material';
 
 @Component({
   selector: 'app-priority-expansion',
